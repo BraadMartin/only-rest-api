@@ -231,6 +231,9 @@ class Only_REST_API {
 	 * Validate our settings before saving.
 	 *
 	 * @since  1.0.0
+	 *
+	 * @param   array  $input  The raw settings.
+	 * @return  array          The clean settings.
 	 */
 	public function validate_settings( $input ) {
 
@@ -308,6 +311,9 @@ class Only_REST_API {
 	 * Add an action link to the settings page.
 	 *
 	 * @since  1.0.0
+	 *
+	 * @param   array  $link  The plugin action links.
+	 * @return  array         The action links with ours added.
 	 */
 	public function action_links( $links ) {
 
