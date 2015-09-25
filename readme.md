@@ -22,7 +22,7 @@ All activity in the wp-admin and all requests for assets like images, scripts, f
 
 Rather than contaminate the data structures you might be using for your application (like posts and pages) this plugin includes a settings page with a simple textarea box where you can save any basic message you want to show. The message content is stored in the options table, and the textarea supports all the same HTML that you can use in post content.
 
-You can use the `only_rest_api_page_content` filter to include any custom HTML output you want inside the <body> tags, or you can use the `only_rest_api_page_html` filter to completely replace all HTML output of the message page, including the <html> and <head> tags.
+You can use the `only_rest_api_page_content` filter to include any custom HTML output you want inside the `<body>` tags, or you can use the `only_rest_api_page_html` filter to completely replace all HTML output of the message page, including the `<html>` and `<head>` tags.
 
 There is also an `only_rest_api_page_css` filter that allows you to override the 5 lines of CSS this plugin includes to center the message on the page.
 
@@ -30,65 +30,59 @@ If you want a hook added or have a feature request let me know. Pull requests ar
 
 ### Filter Examples ###
 
-Use custom HTML inside the <body> tags:
+Use custom HTML inside the `<body>` tags:
 
-```php
-add_filter( 'only_rest_api_page_content', 'xxx_page_content' );
-function xxx_page_content( $content ) {
+	add_filter( 'only_rest_api_page_content', 'xxx_page_content' );
+	function xxx_page_content( $content ) {
 
-	$content = '<div class="custom-output">Sorry, I Only Speak REST. Please try again at a proper endpoint.</div>';
+		$content = '<div class="custom-output">Sorry, I Only Speak REST. Please try again at a proper endpoint.</div>';
 
-	return $content;
-}
-```
+		return $content;
+	}
 
 Add custom CSS to the default output:
 
-```php
-add_filter( 'only_rest_api_page_css', 'xxx_page_css' );
-function xxx_page_css( $css ) {
+	add_filter( 'only_rest_api_page_css', 'xxx_page_css' );
+	function xxx_page_css( $css ) {
 
-	$css .= '.page-content { color: red; font-size: 72px; }';
+		$css .= '.page-content { color: red; font-size: 72px; }';
 
-	return $css;
-}
-```
+		return $css;
+	}
 
 Replace the entire HTML output for the page:
 
-```php
-add_filter( 'only_rest_api_page_html', 'xxx_page_html' );
-function xxx_page_html( $html ) {
+	add_filter( 'only_rest_api_page_html', 'xxx_page_html' );
+	function xxx_page_html( $html ) {
 
-	ob_start();
+		ob_start();
 
-	?>
-	<!doctype html>
-	<html lang="">
-		<head>
-			<meta charset="utf-8">
-			<meta http-equiv="x-ua-compatible" content="ie=edge">
-			<title>Call me back over the REST API yo!</title>
-			<meta name="description" content="">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link rel="stylesheet" type="text/css" href="your-awesome-stylesheet.css">
-			<script type="text/javascript">
-				// Do neat stuff...
-			</script>
-		</head>
-		<body>
-			<div class="page-content">
-				Ain't nobody got time for non-REST API requests. Please try again at a proper endpoint. :)
-			</div>
-		</body>
-	</html>
-	<?php
+		?>
+		<!doctype html>
+		<html lang="">
+			<head>
+				<meta charset="utf-8">
+				<meta http-equiv="x-ua-compatible" content="ie=edge">
+				<title>Call me back over the REST API yo!</title>
+				<meta name="description" content="">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<link rel="stylesheet" type="text/css" href="your-awesome-stylesheet.css">
+				<script type="text/javascript">
+					// Do neat stuff...
+				</script>
+			</head>
+			<body>
+				<div class="page-content">
+					Ain't nobody got time for non-REST API requests. Please try again at a proper endpoint. :)
+				</div>
+			</body>
+		</html>
+		<?php
 
-	$html = ob_get_clean();
+		$html = ob_get_clean();
 
-	return $html;
-}
-```
+		return $html;
+	}
 
 ## Installation ##
 
