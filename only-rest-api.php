@@ -259,58 +259,51 @@ class Only_REST_API {
 			$options['message'] = __( 'Sorry, this website only answers requests to the REST API. Please try again at a proper endpoint.', 'only-rest-api' );
 		}
 
+		// Set up some default css.
+		$css = '
+		.page-content {
+			margin: 200px auto 0;
+			width: 420px;
+			max-width: 94%;
+			font-size: 20px;
+			text-align: center;
+		}';
+
+		// Allow others to use custom CSS.
+		$css = apply_filters( 'only_rest_api_page_css', $css, $options );
+
+		$content = sprintf(
+			'<style type="text/css">%s</style><div class="page-content">%s</div>',
+			$css,
+			$options['message']
+		);
+
 		// Allow others to use custom output.
-		$output = apply_filters( 'only_rest_api_page_content', '', $options );
+		$content = apply_filters( 'only_rest_api_page_content', $content, $options );
 
-		if ( '' === $output ) {
+		// Set up our default page HTML.
+		ob_start();
 
-			// Allow others to use custom CSS.
-			$css = apply_filters( 'only_rest_api_page_css', '', $options );
+		?>
+<!doctype html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<?php echo $content; ?>
+	</body>
+</html>
+		<?php
 
-			// If no custom CSS, use our default.
-			if ( '' === $css ) {
-				$css = '.page-content {
-					margin: 200px auto 0;
-					width: 420px;
-					max-width: 94%;
-					font-size: 20px;
-					text-align: center;
-				}';
-			}
-
-			$output = sprintf(
-				'<style type="text/css">%s</style><div class="page-content">%s</div>',
-				$css,
-				$options['message']
-			);
-		}
+		$page_html = ob_get_clean();
 
 		// Allow others to use custom html for the entire page.
-		$page_html = apply_filters( 'only_rest_api_page_html', '', $options, $output, $css );
-
-		if ( '' === $page_html ) {
-
-			ob_start();
-
-			// Use a minimal HTML5 boilterplate.
-			?>
-			<!doctype html>
-			<html lang="">
-				<head>
-					<meta charset="utf-8">
-					<meta http-equiv="x-ua-compatible" content="ie=edge">
-					<title></title>
-					<meta name="description" content="">
-					<meta name="viewport" content="width=device-width, initial-scale=1">
-				</head>
-				<body>
-					<?php echo $output; ?>
-				</body>
-			</html>
-			<?php
-
-			$page_html = ob_get_clean();
-		}
+		$page_html = apply_filters( 'only_rest_api_page_html', $page_html, $options, $content, $css );
 
 		echo $page_html;
 	}
