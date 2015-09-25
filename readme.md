@@ -12,9 +12,9 @@ Redirects all front end, non-REST API requests to a single page.
 
 ## Description ##
 
-Got a WordPress install that serves only as the data layer and/or admin UI of your web application? This plugin will effectively turn off all default front end output, redirect all front end urls to the main site url, and optionally display a message of your choice.
+Got a WordPress install that serves only as the data layer and/or admin UI of your web application?
 
-The message can be a simple plain text message or you can use the included filters to completely control the HTML output.
+This plugin will effectively turn off all default front end output, redirect all front end urls to the main site url, and optionally display a message of your choice. The message can be a simple plain text message or you can use the included filters to completely control the HTML output.
 
 All activity in the wp-admin and all requests for assets like images, scripts, files, etc. will be unaffected by this plugin. Only requests that go through the `template_redirect` action will be affected.
 
