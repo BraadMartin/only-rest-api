@@ -25,8 +25,6 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ONLY_REST_API_VERSION', '1.0.0' );
-define( 'ONLY_REST_API_SLUG', 'only-rest-api' );
-define( 'ONLY_REST_API_DISPLAY_NAME', 'Only REST API' );
 
 /**
  * Our main plugin class.
@@ -78,8 +76,8 @@ class Only_REST_API {
 	public function __construct() {
 
 		$this->version      = ONLY_REST_API_VERSION;
-		$this->slug         = ONLY_REST_API_SLUG;
-		$this->display_name = ONLY_REST_API_DISPLAY_NAME;
+		$this->slug         = 'only-rest-api';
+		$this->display_name = __( 'Only REST API', 'only-rest-api' );
 		$this->option_name  = $this->slug . '-options';
 
 		$this->initialize();
@@ -174,7 +172,7 @@ class Only_REST_API {
 		);
 
 		add_settings_section(
-			$this->slug . '-section',           // Section ID.
+			$this->slug . '-general',           // Section ID.
 			__( 'Options', 'only-rest-api' ),   // Title.
 			array( $this, 'settings_section' ), // Callback.
 			$this->slug                         // Settings Page.
@@ -186,7 +184,7 @@ class Only_REST_API {
 			__( 'Front end message:', 'only-rest-api' ), // Title.
 			array( $this, 'message_field' ),             // Callback.
 			$this->slug,                                 // Settings Page.
-			$this->slug . '-section'                     // Section ID.
+			$this->slug . '-general'                     // Section ID.
 		);
 	}
 
@@ -219,11 +217,11 @@ class Only_REST_API {
 			'<textarea id="%s-message-field" name="%s" class="widefat" rows="8" cols="60">%s</textarea>',
 			$this->slug,
 			$this->option_name . '[message]',
-			wp_kses_post( $message )
+			esc_textarea( $message )
 		);
 
 		printf(
-			'<p>' . __( 'Want to use more than just text here? Check out the %s and %s filters.', 'only-rest-api' ) . '</p>',
+			'<p>' . __( 'This textarea supports the same HTML as post content. Custom HTML can also be used with the %s and %s filters.', 'only-rest-api' ) . '</p>',
 			'<code>only_rest_api_page_content</code>',
 			'<code>only_rest_api_page_html</code>'
 		);
@@ -266,11 +264,10 @@ class Only_REST_API {
 
 		if ( '' === $output ) {
 
-			$message = ( isset( $options['message'] ) ) ? $options['message'] : '';
-
-			// Add in some basic CSS.
+			// Allow others to use custom CSS.
 			$css = apply_filters( 'only_rest_api_page_css', '', $options );
 
+			// If no custom CSS, use our default.
 			if ( '' === $css ) {
 				$css = '.page-content {
 					margin: 200px auto 0;
@@ -284,7 +281,7 @@ class Only_REST_API {
 			$output = sprintf(
 				'<style type="text/css">%s</style><div class="page-content">%s</div>',
 				$css,
-				$message
+				$options['message']
 			);
 		}
 
@@ -327,7 +324,7 @@ class Only_REST_API {
 
 		$link = sprintf(
 			'<a href="%s">%s</a>',
-			get_admin_url( null, 'options-general.php?page=vertical-center' ),
+			get_admin_url( null, 'options-general.php?page=only-rest-api' ),
 			__( 'Settings', 'only-rest-api' )
 		);
 
