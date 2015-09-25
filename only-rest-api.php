@@ -112,7 +112,7 @@ class Only_REST_API {
 
 		if ( ! is_front_page() ) {
 
-			wp_redirect( site_url() );
+			wp_redirect( home_url() );
 			exit;
 
 		} else {
