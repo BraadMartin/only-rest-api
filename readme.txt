@@ -108,6 +108,10 @@ function xxx_page_html( $html ) {
 
 No, this plugin hooks into the `template_redirect` action, which only fires when a front end page of some kind is being served.
 
+= Does the plugin work with both v1 and v2 of the WP REST API? =
+
+Yes! This plugin supports both versions of the WP REST API and will support the final version that gets merged into core.
+
 == Screenshots ==
 
 1. Customizable message shown on the front end for non-REST API requests
