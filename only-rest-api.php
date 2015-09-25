@@ -206,7 +206,7 @@ class Only_REST_API {
 
 		$options = get_option( $this->option_name );
 
-		// Use default message if no custom message has been saved yet.
+		// Use default message if no custom message has been saved.
 		if ( ! isset( $options['message'] ) ) {
 			$options['message'] = __( 'Sorry, this website only answers requests to the REST API. Please try again at a proper endpoint.', 'only-rest-api' );
 		}
@@ -254,7 +254,7 @@ class Only_REST_API {
 
 		$options = get_option( $this->option_name );
 
-		// Use default message if no custom message has been saved yet.
+		// Use default message if no custom message has been saved.
 		if ( ! isset( $options['message'] ) ) {
 			$options['message'] = __( 'Sorry, this website only answers requests to the REST API. Please try again at a proper endpoint.', 'only-rest-api' );
 		}
@@ -305,7 +305,7 @@ class Only_REST_API {
 				</head>
 				<body>
 					<?php echo $output; ?>
-			    </body>
+				</body>
 			</html>
 			<?php
 
