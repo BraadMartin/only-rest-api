@@ -236,11 +236,7 @@ class Only_REST_API {
 
 		$new_input = array();
 
-		if ( isset( $input['message'] ) ) {
-			$new_input['message'] = wp_kses_post( $input['message'] );
-		} else {
-			$new_input['message'] = '';
-		}
+		$new_input['message'] = ( isset( $input['message'] ) ) ? wp_kses_post( $input['message'] ) : '';
 
 		return $new_input;
 	}
